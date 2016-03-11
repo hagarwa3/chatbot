@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<link href='https://fonts.googleapis.com/css?family=Raleway:400, 600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+<style type="text/css">
+  .heading{
+          color:#00001a;
+          font-family: 'Raleway', sans-serif;
+          font-weight: 700;
+          font-size: 120px;
+          color: #fff;
+          margin-top: 10px;   
+  }
+  body{
+           background: #000;
+          -webkit-background-size: cover;
+          -moz-background-size: cover;
+          -o-background-size: cover;
+          background-size: cover;
+          position:relative;
+          margin:0;
+  }
+  .button1{
+          padding: 10px 15px;
+          font-size: 20px;
+          font-weight: normal;
+          line-height: 1;
+          color: #000;
+          text-align: center;
+          border: 1px solid #2c3e50;
+  }
+  .button1:hover{
+          color: #fff;
+          text-align: center;
+          border: 1px solid #2c3e50;
+          background: #000000;
+  }
+  .button1:focus {
+          outline: none;
+  }
+  p {
+          position: relative;
+          color: #000033;
+          font-size: 30px;
+          font-weight: normal;
+  }
+  .live_command{
+          padding: 10px 15px;
+          font-size: 20px;
+          font-weight: normal;
+          line-height: 1;
+          color: #000;
+          background-color: #fff;
+          border: 1px solid #2c3e50;
+  }
+  .live_command:focus{
+        outline: none;
+        border: 1px solid black;
+  }
+
+  .output{
+        padding: 10px 15px;
+        font-size: 20px;
+        font-weight: normal;
+        line-height: 1;
+        color: #000;
+        background-color: #fff;
+  }
+
+  .text-center{
+        font-weight: normal;
+        font-size:50px;
+  }
+</style>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<div class="heading">
+    <h1 class="text-center">TRUMP BOT<small>v1.0</small></h1>
+</div>
+<br>
+    <div class="container-fluid">
+    	<textarea rows="18" class="form-control output" id="outputmessages" readonly></textarea>
+    	<br /><br />
+       <form>
+        <div class="form-group col-md-11">
+          <textarea rows="1" class="form-control live_command" id="inputclient" placeholder="Type your message . . ."></textarea>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-success button1">SEND</button>
+        </div>
+      </form>
+    </div>
+<script>
+$(document).ready(function() {
+	$("#inputclient").keyup(function(event){
+    	if(event.keyCode == 13){
+    		 $(".button1").click();
+    	}
+	});
+
+	$(".button1").click(function(){
+
+	  var client_msg = document.getElementById("inputclient").value 
+	  document.getElementById("outputmessages").value += 'YOU: '+client_msg +'\n'
+
+	  var request = $.ajax({
+	      url: 'https://trumpchatbot.herokuapp.com',
+	      type: 'GET',
+	      data: { content: document.getElementById("inputclient").value },
+	      dataType: "text"
+	  });
+
+	  request.done(function( msg ) {
+	       	document.getElementById("outputmessages").value += 'TRUMP: '+msg +'\n\n'
+	  });
+	 
+	  request.fail(function( request, status, error ) {
+	    	 document.getElementById("outputmessages").value += 'TRUMP Error: '+request +'\n\n'
+	  });
+
+	  document.getElementById("inputclient").value = ""
+	  var textarea = document.getElementById('outputmessages');
+	  textarea.scrollTop = textarea.scrollHeight;
+	});
+
+});
+</script>
+</body>
+</html>
