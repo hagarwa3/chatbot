@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
 <head>
@@ -126,6 +127,15 @@ $(document).ready(function() {
   });
 
   $(".button1").click(function(){
+    var textArray = [
+      "I don't even think that deserves a reply, if I'm being entirely honest",
+      "You're ugly and I don't grace ugly people by talking with them",
+      "Let me clarify, because I do not repeat myself. I do not repeat myself",
+      "I would make you pay for the wall, for saying that",
+      "If you worked for me, I would fire you for even mentioning that",
+      "I can assure there is no problem, there is no problem"
+  ];
+  var randomNumber = Math.floor(Math.random()*textArray.length);
     var client_msg = document.getElementById("inputclient").value 
     $("#area").append("<div class='form-control client'>"+client_msg+ "</div>");
 
@@ -141,17 +151,10 @@ $(document).ready(function() {
           var textarea = document.getElementById('area');
           textarea.scrollTop = textarea.scrollHeight;
     });
-    var textArray = [
-      "I don't even think that deserves a reply, if I'm being entirely honest",
-      "You're ugly and I don't grace ugly people by talking with them",
-      "Let me clarify, because I do not repeat myself. I do not repeat myself",
-      "I would make you pay for the wall, for saying that",
-      "If you worked for me, I would fire you for even mentioning that",
-      "I can assure there is no problem, there is no problem"
-  ];
-  var randomNumber = Math.floor(Math.random()*textArray.length);
+   
     request.fail(function( request, status, error ) {
-          $("#area").append("<div class='form-control server' id='outputmessages'>"textArray[randomNumber]"</div>");
+          $("#area").append("<div class='form-control server' id='outputmessages'>"+textArray[randomNumber]+ "</div>");
+    });
 
     document.getElementById("inputclient").value = ""
   });
