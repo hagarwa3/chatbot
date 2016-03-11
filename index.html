@@ -154,6 +154,8 @@ $(document).ready(function() {
    
     request.fail(function( request, status, error ) {
           $("#area").append("<div class='form-control server' id='outputmessages'>"+textArray[randomNumber]+ "</div>");
+          var textarea = document.getElementById('area');
+          textarea.scrollTop = textarea.scrollHeight;
     });
 
     document.getElementById("inputclient").value = ""
