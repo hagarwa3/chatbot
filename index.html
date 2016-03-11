@@ -61,19 +61,40 @@
         border: 1px solid black;
   }
 
-  .output{
+  .client{
+        float: right;
         padding: 10px 15px;
         font-size: 20px;
         font-weight: normal;
-        line-height: 1;
-        color: #000;
-        background-color: #fff;
+        width: 60%;
+        height: auto;
+        margin-top: 10px;
+        background-color: #00CC00;
+        color: #000000;
+         }
+
+  .server{
+        float: left;
+        padding: 10px 15px;
+        font-size: 20px;
+        font-weight: normal;
+        width: 60%;
+        height: auto;
+        margin-top: 10px;
+        background-color: #34AADC;
+        color: #000000;
   }
 
   .text-center{
         font-weight: normal;
         font-size:50px;
   }
+
+  #area{
+      height:400px;
+      overflow:auto;
+  }
+
 </style>
 </head>
 <body>
@@ -83,7 +104,8 @@
 </div>
 <br>
     <div class="container-fluid">
-    	<textarea rows="18" class="form-control output" id="outputmessages" readonly></textarea>
+    <div id="area">
+    </div>
     	<br /><br />
        <form>
         <div class="form-group col-md-11">
@@ -94,6 +116,7 @@
         </div>
       </form>
     </div>
+
 <script>
 $(document).ready(function() {
 	$("#inputclient").keyup(function(event){
@@ -103,9 +126,8 @@ $(document).ready(function() {
 	});
 
 	$(".button1").click(function(){
-
-	  var client_msg = document.getElementById("inputclient").value 
-	  document.getElementById("outputmessages").value += 'YOU: '+client_msg +'\n'
+    var client_msg = document.getElementById("inputclient").value 
+    $("#area").append("<div class='form-control client'>"+client_msg+ "</div>");
 
 	  var request = $.ajax({
 	      url: 'https://trumpchatbot.herokuapp.com',
@@ -115,19 +137,20 @@ $(document).ready(function() {
 	  });
 
 	  request.done(function( msg ) {
-	       	document.getElementById("outputmessages").value += 'TRUMP: '+msg +'\n\n'
+          $("#area").append("<div class='form-control server' id='outputmessages'>"+msg+ "</div>");
+          var textarea = document.getElementById('area');
+          textarea.scrollTop = textarea.scrollHeight;
 	  });
 	 
 	  request.fail(function( request, status, error ) {
-	    	 document.getElementById("outputmessages").value += 'TRUMP : I won\'t even grace that with a reply'+'\n\n'
+	    	  $("#area").append("<div class='form-control server' id='outputmessages'>I don't even think that deserves a reply, if I'm being entirely honest</div>");
 	  });
 
 	  document.getElementById("inputclient").value = ""
-	  var textarea = document.getElementById('outputmessages');
-	  textarea.scrollTop = textarea.scrollHeight;
 	});
 
 });
 </script>
+
 </body>
 </html>
